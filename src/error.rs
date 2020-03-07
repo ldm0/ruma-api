@@ -191,7 +191,7 @@ enum SerializationError {
 #[doc(hidden)]
 #[derive(Debug)]
 pub enum DeserializationError {
-    Encod(std::str::Utf8Error),
+    Utf8(std::str::Utf8Error),
     Json(serde_json::Error),
     Query(serde_urlencoded::de::Error),
     Ident(ruma_identifiers::Error),
@@ -203,7 +203,7 @@ pub enum DeserializationError {
 impl Display for DeserializationError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
-            DeserializationError::Encod(err) => Display::fmt(err, f),
+            DeserializationError::Utf8(err) => Display::fmt(err, f),
             DeserializationError::Json(err) => Display::fmt(err, f),
             DeserializationError::Query(err) => Display::fmt(err, f),
             DeserializationError::Ident(err) => Display::fmt(err, f),
@@ -215,7 +215,7 @@ impl Display for DeserializationError {
 #[doc(hidden)]
 impl From<std::str::Utf8Error> for DeserializationError {
     fn from(err: std::str::Utf8Error) -> Self {
-        Self::Encod(err)
+        Self::Utf8(err)
     }
 }
 
